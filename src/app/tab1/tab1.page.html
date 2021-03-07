@@ -1,17 +1,66 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-icon slot="start" style="font-size:20px; margin-left: 10px;" name="home-outline" (click)="presentAlertRadio()"></ion-icon>
     <ion-title>
-      Tab 1
+      บ้านของฉัน
     </ion-title>
+    <ion-icon slot="end" style="font-size:25px; margin-right: 10px;" name="add-outline"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-header collapse="condense" class="ion-no-border">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title size="large">บ้านของฉัน</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-card (click)="discover()">
+    <ion-card-header style="background-color:#4D5287">
+      <h3 style="color:white;"><b>ค้นพบบ้าน</b></h3>
+      <p style="color:white;">สำรวจโอกาสในการเพิ่มอุปกรณ์เสริมไปยังบ้านของคุณด้วยวิธีง่ายๆ</p>
+
+    </ion-card-header>
+    <p style="margin-left:20px"><b>เรียนรู้เพิ่มเติม</b></p>
+  </ion-card>
+
+
+  <ion-grid>
+    <p style="margin-left:20px;">อุปกรณ์เสริม</p>
+    <ion-card *ngIf="Obj.length == 0" style="width: 120px; max-width: 120px; max-height: 120px;">
+      <ion-card-header>
+        <ion-icon style="font-size: 35px;" name="add"></ion-icon>
+        <p style="font-size: 12px;">เพิ่มอุปกรณ์เสริม</p>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-row *ngFor="let items of Obj" style="text-align: center;">
+      <ion-col *ngFor="let item of items">
+        <ion-card style="width: 120px; max-width: 120px; max-height: 120px;" (click)="OpenOrClose(item)">
+          <ion-card-header>
+            <ion-icon *ngIf="item.type == 'light' && item.status == false" style="font-size: 35px;" name="bulb-outline">
+            </ion-icon>
+            <ion-icon *ngIf="item.type == 'curtain' && item.status == false" style="font-size: 35px;"
+              name="tablet-portrait-outline"></ion-icon>
+            <ion-icon *ngIf="item.type == 'fan' && item.status == false" style="font-size: 35px;" name="flower-outline">
+            </ion-icon>
+
+            <ion-icon *ngIf="item.type == 'light' && item.status == true" style="font-size: 35px;" name="bulb">
+            </ion-icon>
+            <ion-icon *ngIf="item.type == 'curtain' && item.status == true" style="font-size: 35px;"
+              name="tablet-portrait"></ion-icon>
+            <ion-icon *ngIf="item.type == 'fan' && item.status == true" style="font-size: 35px;" name="flower">
+            </ion-icon>
+            <p style="font-size: 12px;">{{item.name}}</p>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+      <ion-col>
+
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
+
 </ion-content>
