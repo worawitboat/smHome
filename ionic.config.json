@@ -1,0 +1,7 @@
+{
+  "name": "smHome",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
