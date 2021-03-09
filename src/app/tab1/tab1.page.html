@@ -1,6 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-icon slot="start" style="font-size:20px; margin-left: 10px;" name="home-outline" (click)="presentAlertRadio()"></ion-icon>
+    <ion-icon slot="start" style="font-size:20px; margin-left: 10px;" name="home-outline" (click)="presentAlertRadio()">
+    </ion-icon>
     <ion-title>
       บ้านของฉัน
     </ion-title>
@@ -27,14 +28,40 @@
 
   <ion-grid>
     <p style="margin-left:20px;">อุปกรณ์เสริม</p>
-    <ion-card *ngIf="Obj.length == 0" style="width: 120px; max-width: 120px; max-height: 120px;">
+    <ion-card *ngIf="datas.length == 0" style="width: 120px; max-width: 120px; max-height: 120px;">
       <ion-card-header>
         <ion-icon style="font-size: 35px;" name="add"></ion-icon>
         <p style="font-size: 12px;">เพิ่มอุปกรณ์เสริม</p>
       </ion-card-header>
     </ion-card>
 
-    <ion-row *ngFor="let items of Obj" style="text-align: center;">
+    <ion-row style="text-align: center;" size-lg="2" size-md="2" size-sm="2" size="2">
+      <ion-col *ngFor="let item of datas | async">
+        <ion-card style="width: 120px; max-width: 120px; max-height: 120px;" (click)="OpenOrClose(item.status)">
+          <ion-card-header>
+            <ion-icon *ngIf="item.type == 'light' && item.status == false" style="font-size: 35px;" name="bulb-outline">
+            </ion-icon>
+            <ion-icon *ngIf="item.type == 'curtain' && item.status == false" style="font-size: 35px;"
+              name="tablet-portrait-outline"></ion-icon>
+            <ion-icon *ngIf="item.type == 'fan' && item.status == false" style="font-size: 35px;" name="flower-outline">
+            </ion-icon>
+
+            <ion-icon *ngIf="item.type == 'light' && item.status == true" style="font-size: 35px;" name="bulb" color="warning">
+            </ion-icon>
+            <ion-icon *ngIf="item.type == 'curtain' && item.status == true" style="font-size: 35px;"
+              name="tablet-portrait"></ion-icon>
+            <ion-icon *ngIf="item.type == 'fan' && item.status == true" style="font-size: 35px;" name="flower" color="secondary">
+            </ion-icon>
+            <p style="font-size: 12px;">{{item.name}}</p>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+
+    <!-- <ion-row *ngFor="let items of Obj" style="text-align: center;">
+      <ion-col>
+      </ion-col>
       <ion-col *ngFor="let item of items">
         <ion-card style="width: 120px; max-width: 120px; max-height: 120px;" (click)="OpenOrClose(item)">
           <ion-card-header>
@@ -56,10 +83,9 @@
         </ion-card>
       </ion-col>
       <ion-col>
-
       </ion-col>
 
-    </ion-row>
+    </ion-row> -->
 
   </ion-grid>
 

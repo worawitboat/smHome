@@ -12,6 +12,7 @@ export class Tab1Page {
   Obj: any = [];
   home: any; // บ้านที่มีทั้งหมด
   myHome: String = "บ้านพัก";
+  datas: any;
   constructor(private getCrud: crudapi, private route: Router) { }
 
   ngOnInit(): void {
@@ -36,29 +37,8 @@ export class Tab1Page {
     // ------------------------------
     this.home = this.getCrud.readHome();
 
-    let tempObj = [];
-    let temp = this.getCrud.readData();
-    let index = 0;
-    for (let i = 0; i < temp.length; i++) {
-      if (temp[i].home == this.myHome) {
-        tempObj.push(temp[i])
-        index++;
-      }
-      if (temp[i].home == this.myHome && index == 2) {
-        this.Obj.push(tempObj);
-        tempObj = [];
-        index = 0;
-      }
-    }
-    if (tempObj.length != 0) {
-      this.Obj.push(tempObj);
-    }
-
-    //ทำให้ array เป็นแบบนี้
-    // [[],[]],
-    // [[],[]]...
-    // เพื่อ วนลูปในหน้าแอพให้เป็นแบบนั้น 
-    //---------------------------------
+    this.datas = this.getCrud.readData();
+    
 
   }
 
