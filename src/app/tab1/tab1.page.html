@@ -56,18 +56,18 @@
       <ion-col *ngFor="let item of device; let i= index">
         <ion-card style="width: 120px; max-width: 120px; max-height: 180px;">
           <ion-card-header (click)="OpenOrClose(item,i)">
-            <ion-icon *ngIf="item.type == 'light' && item.status == false" style="font-size: 35px;" name="bulb-outline">
+            <ion-icon *ngIf="item.type == 'light' && item.status == false" style="font-size: 35px;" name="bulb">
             </ion-icon>
             <ion-icon *ngIf="item.type == 'curtain' && item.status == false" style="font-size: 35px;"
-              name="tablet-portrait-outline"></ion-icon>
-            <ion-icon *ngIf="item.type == 'fan' && item.status == false" style="font-size: 35px;" name="flower-outline">
+              name="tablet-portrait"></ion-icon>
+            <ion-icon *ngIf="item.type == 'fan' && item.status == false" style="font-size: 35px;" name="flower">
             </ion-icon>
 
             <ion-icon *ngIf="item.type == 'light' && item.status == true" style="font-size: 35px;" name="bulb"
               color="warning">
             </ion-icon>
             <ion-icon *ngIf="item.type == 'curtain' && item.status == true" style="font-size: 35px;"
-              name="tablet-portrait"></ion-icon>
+              name="tablet-portrait" color="secondary"></ion-icon>
             <ion-icon *ngIf="item.type == 'fan' && item.status == true" style="font-size: 35px;" name="flower"
               color="secondary">
             </ion-icon>
