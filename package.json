@@ -30,6 +30,7 @@
     "cordova-plugin-googlemaps": "^2.7.1",
     "emulate": "1.0.2",
     "firebase": "^8.2.10",
+    "highcharts": "^9.0.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
