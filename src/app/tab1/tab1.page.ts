@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { crudapi } from '../CRUD/crudapi';
 
 
+
+
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -111,4 +114,10 @@ export class Tab1Page {
     return alert.present();
   }
 
+  edit(item){
+    console.log(item);
+    
+  }
+  
+  
 }

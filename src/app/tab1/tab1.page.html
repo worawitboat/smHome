@@ -17,12 +17,18 @@
   </ion-header>
 
   <ion-card (click)="discover()">
-    <ion-card-header style="background-color:#4D5287">
-      <h3 style="color:white;"><b>ค้นพบบ้าน</b></h3>
-      <p style="color:white;">สำรวจโอกาสในการเพิ่มอุปกรณ์เสริมไปยังบ้านของคุณด้วยวิธีง่ายๆ</p>
+    <img
+      src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NHx8c21hcnQlMjBob21lfGVufDB8fDB8&ixlib=rb-1.2.1&w=1000&q=80" />
+    <ion-card-header>
+
+      <h3 style="color: black;"><b>ค้นพบบ้าน</b></h3>
+      <p style="color: black;">สำรวจโอกาสในการเพิ่มอุปกรณ์เสริมไปยังบ้านของคุณด้วยวิธีง่ายๆ</p>
 
     </ion-card-header>
-    <p style="margin-left:20px"><b>เรียนรู้เพิ่มเติม</b></p>
+    <ion-card-content style="background-color: rgb(255, 177, 9); color: white;">
+      <br>
+     <b>เรียนรู้เพิ่มเติม ></b>
+    </ion-card-content>
   </ion-card>
 
 
@@ -37,7 +43,8 @@
 
     <ion-row style="text-align: center;" size-lg="2" size-md="2" size-sm="2" size="2">
       <ion-col *ngFor="let item of datas | async">
-        <ion-card style="width: 120px; max-width: 120px; max-height: 120px;" (click)="OpenOrClose(item.status)">
+        <ion-card style="width: 120px; max-width: 120px; max-height: 120px;"
+          (click)="OpenOrClose(item.status)">
           <ion-card-header>
             <ion-icon *ngIf="item.type == 'light' && item.status == false" style="font-size: 35px;" name="bulb-outline">
             </ion-icon>
@@ -46,11 +53,13 @@
             <ion-icon *ngIf="item.type == 'fan' && item.status == false" style="font-size: 35px;" name="flower-outline">
             </ion-icon>
 
-            <ion-icon *ngIf="item.type == 'light' && item.status == true" style="font-size: 35px;" name="bulb" color="warning">
+            <ion-icon *ngIf="item.type == 'light' && item.status == true" style="font-size: 35px;" name="bulb"
+              color="warning">
             </ion-icon>
             <ion-icon *ngIf="item.type == 'curtain' && item.status == true" style="font-size: 35px;"
               name="tablet-portrait"></ion-icon>
-            <ion-icon *ngIf="item.type == 'fan' && item.status == true" style="font-size: 35px;" name="flower" color="secondary">
+            <ion-icon *ngIf="item.type == 'fan' && item.status == true" style="font-size: 35px;" name="flower"
+              color="secondary">
             </ion-icon>
             <p style="font-size: 12px;">{{item.name}}</p>
           </ion-card-header>
