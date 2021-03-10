@@ -5,7 +5,10 @@
     <ion-title>
       บ้านของฉัน
     </ion-title>
-    <ion-icon slot="end" style="font-size:25px; margin-right: 10px;" name="add-outline"></ion-icon>
+    <ion-icon *ngIf="myHome == 'บ้านของฉัน'" slot="end" style="font-size:25px; margin-right: 10px;" name="add-outline"
+      (click)="openToast()"></ion-icon>
+    <ion-icon *ngIf="myHome != 'บ้านของฉัน'" slot="end" style="font-size:25px; margin-right: 10px;" name="add-outline"
+      (click)="addDevice()"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
@@ -27,14 +30,22 @@
     </ion-card-header>
     <ion-card-content style="background-color: rgb(255, 177, 9); color: white;">
       <br>
-     <b>เรียนรู้เพิ่มเติม ></b>
+      <b>เรียนรู้เพิ่มเติม ></b>
     </ion-card-content>
   </ion-card>
 
 
   <ion-grid>
     <p style="margin-left:20px;">อุปกรณ์เสริม</p>
-    <ion-card *ngIf="device.length == 0" style="width: 120px; max-width: 120px; max-height: 120px;">
+    <ion-card *ngIf="device.length == 0 && myHome == 'บ้านของฉัน'"
+      style="width: 120px; max-width: 120px; max-height: 120px;" (click)="openToast()">
+      <ion-card-header>
+        <ion-icon style="font-size: 35px;" name="add"></ion-icon>
+        <p style="font-size: 12px;">เพิ่มอุปกรณ์เสริม</p>
+      </ion-card-header>
+    </ion-card>
+    <ion-card *ngIf="device.length == 0 && myHome != 'บ้านของฉัน'"
+      style="width: 120px; max-width: 120px; max-height: 120px;" (click)="addDevice()">
       <ion-card-header>
         <ion-icon style="font-size: 35px;" name="add"></ion-icon>
         <p style="font-size: 12px;">เพิ่มอุปกรณ์เสริม</p>
@@ -43,9 +54,8 @@
 
     <ion-row *ngIf="myHome != 'บ้านของฉัน'" style="text-align: center;" size-lg="2" size-md="2" size-sm="2" size="2">
       <ion-col *ngFor="let item of device; let i= index">
-        <ion-card style="width: 120px; max-width: 120px; max-height: 120px;"
-          (click)="OpenOrClose(item,i)">
-          <ion-card-header>
+        <ion-card style="width: 120px; max-width: 120px; max-height: 180px;">
+          <ion-card-header (click)="OpenOrClose(item,i)">
             <ion-icon *ngIf="item.type == 'light' && item.status == false" style="font-size: 35px;" name="bulb-outline">
             </ion-icon>
             <ion-icon *ngIf="item.type == 'curtain' && item.status == false" style="font-size: 35px;"
@@ -62,7 +72,27 @@
               color="secondary">
             </ion-icon>
             <p style="font-size: 12px;">{{item.name}}</p>
+
+
           </ion-card-header>
+
+          <ion-list>
+            <ion-row>
+              <ion-col>
+                <ion-button size="small" color="primary" (click)="edit(item,i)">
+                  <ion-icon name="create-outline" style="font-size: 20px;" ></ion-icon>
+                </ion-button>
+              </ion-col>
+              <ion-col>
+                <ion-button size="small" color="danger" (click)="del(item,i)">
+                  <ion-icon name="trash" style="font-size: 20px;" ></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-list>
+
+
+
         </ion-card>
       </ion-col>
 

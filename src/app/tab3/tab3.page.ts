@@ -9,25 +9,27 @@ import { crudapi } from '../CRUD/crudapi';
 })
 export class Tab3Page {
   map: any;
-  myHome:any;
-  constructor(private getCrud: crudapi) {}
+  lat;
+  lng;
+  constructor(private getCrud: crudapi) { 
+    this.lat = this.getCrud.myhome.lat;
+    this.lng = this.getCrud.myhome.lng;
+  }
 
+  
   ngOnInit(): void {
-    
-    
-    this.myHome = this.getCrud.myhome;
-    
+    this.lat = this.getCrud.myhome.lat;
+    this.lng = this.getCrud.myhome.lng;
     this.initMap();
-    
-    
+ 
   }
   initMap() {
 
     let mapOptions: GoogleMapOptions = {
       camera: {
         target: {
-          lat: Number(this.myHome.lat),
-          lng: Number(this.myHome.lng)
+          lat: Number(this.lat),
+          lng: Number(this.lng)
         },
         zoom: 18,
         tilt: 30,
@@ -39,13 +41,13 @@ export class Tab3Page {
     this.map.one(GoogleMapsEvent.MAP_READY)
       .then(() => {
         this.map.addMarker({
-          title: this.myHome.name,
+          title: this.getCrud.myhome.name,
           icon: 'blue',
           animation: 'DROP',
           disableAutoPan: true,
           position: {
-            lat: Number(this.myHome.lat),
-          lng: Number(this.myHome.lng)
+            lat: Number(this.lat),
+            lng: Number(this.lng)
           }
         })
           .then(marker => {
@@ -55,5 +57,5 @@ export class Tab3Page {
           });
       });
   }
-  
+
 }

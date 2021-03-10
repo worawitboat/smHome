@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { crudapi } from '../CRUD/crudapi';
 
 
@@ -16,8 +17,8 @@ export class Tab1Page {
   home: any; // บ้านที่มีทั้งหมด
   myHome: String = "บ้านของฉัน";
   homeSelect: any;
-  device:any = [];
-  constructor(private getCrud: crudapi, private route: Router) { }
+  device: any = [];
+  constructor(private getCrud: crudapi, private route: Router, public toastCtrl: ToastController) { }
 
   ngOnInit(): void {
     // ตัวอย่างจาก firebase 
@@ -39,10 +40,10 @@ export class Tab1Page {
 
   }
 
-  OpenOrClose(item,i) {
+  OpenOrClose(item, i) {
     this.device[i].status = !item.status;
-    
-    this.getCrud.updateData(this.getCrud.myhome.id,this.device);
+
+    this.getCrud.updateData(this.getCrud.myhome.id, this.device);
   }
   discover() {
     this.route.navigate(['/tabs/tab2'])
@@ -64,17 +65,20 @@ export class Tab1Page {
         text: 'เลือก',
         handler: (data) => {
           const temp = JSON.stringify(data);
-          this.getCrud.myhome.id = JSON.parse(temp).id;
-          this.getCrud.myhome.name = JSON.parse(temp).name;
-          this.getCrud.myhome.lat = JSON.parse(temp).lat;
-          this.getCrud.myhome.lng = JSON.parse(temp).lng;
-          
+
+
+
           this.getCrud.readHomeSelect(JSON.parse(temp).id).subscribe(data => {
             this.device = data['device'];
-            
+            this.getCrud.myhome.id = JSON.parse(temp).id;
+            this.getCrud.myhome.name = JSON.parse(temp).name;
+            this.getCrud.myhome.lat = JSON.parse(temp).lat;
+            this.getCrud.myhome.lng = JSON.parse(temp).lng;
+
+            // this.getCrud.myhome = JSON.parse(temp);
           });
-          
-          this.myHome = this.getCrud.myhome.name;
+
+          this.myHome = JSON.parse(temp).name;
 
         }
       }
@@ -96,7 +100,7 @@ export class Tab1Page {
   addHome() {
     const alert = document.createElement('ion-alert');
     alert.cssClass = 'my-custom-class';
-    alert.header = 'Prompt!';
+    alert.header = 'เพิ่มบ้าน';
     alert.inputs = [
       {
         name: 'newHome',
@@ -117,14 +121,14 @@ export class Tab1Page {
     ];
     alert.buttons = [
       {
-        text: 'Cancel',
+        text: 'ยกเลิก',
         role: 'cancel',
         cssClass: 'secondary',
         handler: () => {
           console.log('Confirm Cancel')
         }
       }, {
-        text: 'Ok',
+        text: 'ตกลง',
         handler: (data) => {
           const newHome = {
             name: data.newHome,
@@ -140,54 +144,104 @@ export class Tab1Page {
     return alert.present();
   }
 
-  edit(item) {
-    console.log(item);
+  edit(data, i) {
+    const alert = document.createElement('ion-alert');
+    alert.cssClass = 'my-custom-class';
+    alert.header = 'อุปกรณ์';
+    alert.inputs = [
+      {
+        name: 'deviceName',
+        id: 'deviceName',
+        value: data.name,
+        placeholder: 'ชื่ออุปกรณ์'
+      },
+    ];
+    alert.buttons = [
+      {
+        text: 'ยกเลิก',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: () => {
+          console.log('Confirm Cancel')
+        }
+      }, {
+        text: 'ตกลง',
+        handler: (d) => {
+          this.device[i].name = d.deviceName;
+          this.getCrud.updateDevice(this.getCrud.myhome.id, this.device);
 
+        }
+      }
+    ];
+
+    document.body.appendChild(alert);
+    return alert.present();
+  }
+
+  del(item, i) {
+    const alert = document.createElement('ion-alert');
+    alert.cssClass = 'my-custom-class';
+    alert.header = 'ต้องการลบอุปกรณ์หรือไม่';
+    alert.buttons = [
+      {
+        text: 'ยกเลิก',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: () => {
+         
+        }
+      }, {
+        text: 'ตกลง',
+        handler: () => {
+          let index = this.device.indexOf(item);
+          if (index > -1) {
+            this.device.splice(index, 1);
+          }
+          this.getCrud.delDevice(this.getCrud.myhome.id, this.device);
+        }
+      }
+    ];
+
+    document.body.appendChild(alert);
+    return alert.present();
   }
 
 
   addDevice() {
     const alert = document.createElement('ion-alert');
     alert.cssClass = 'my-custom-class';
-    alert.header = 'Prompt!';
+    alert.header = 'ประเภทอุปกรณ์';
     alert.inputs = [
       {
-        name: 'deviceName',
-        id: 'deviceName',
-        placeholder: 'ชื่ออุปกรณ์'
-      },
-      {
-        type:'radio',
-        label: 'type',
+        type: 'radio',
+        label: 'ไฟ',
         value: 'light',
-        placeholder: 'Light'
       },
       {
-        type:'radio',
-        label: 'type',
+        type: 'radio',
+        label: 'ผ้าม่าน',
         value: 'curtain',
-        placeholder: 'Curtain'
       },
-
+      {
+        type: 'radio',
+        label: 'พัดลม',
+        value: 'fan',
+      },
 
     ];
     alert.buttons = [
       {
-        text: 'Cancel',
+        text: 'ยกเลิก',
         role: 'cancel',
         cssClass: 'secondary',
         handler: () => {
           console.log('Confirm Cancel')
         }
       }, {
-        text: 'Ok',
+        text: 'ตกลง',
         handler: (data) => {
-          const newHome = {
-            name: data.newHome,
-            lat: data.lat,
-            lng: data.lng
-          }
-          this.getCrud.addHome(newHome);
+          this.nextStepAddDevice(data)
+
         }
       }
     ];
@@ -195,6 +249,57 @@ export class Tab1Page {
     document.body.appendChild(alert);
     return alert.present();
   }
+
+  nextStepAddDevice(data) {
+    const alert = document.createElement('ion-alert');
+    alert.cssClass = 'my-custom-class';
+    alert.header = 'อุปกรณ์';
+    alert.inputs = [
+      {
+        name: 'deviceName',
+        id: 'deviceName',
+        placeholder: 'ชื่ออุปกรณ์'
+      },
+    ];
+    alert.buttons = [
+      {
+        text: 'ยกเลิก',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: () => {
+          console.log('Confirm Cancel')
+        }
+      }, {
+        text: 'ตกลง',
+        handler: (i) => {
+          const item = {
+            type: data,
+            name: i.deviceName,
+            status: false
+          }
+          this.device.push(item);
+          this.getCrud.addDevice(this.getCrud.myhome.id, this.device);
+
+        }
+      }
+    ];
+
+    document.body.appendChild(alert);
+    return alert.present();
+  }
+
+  async openToast() {
+
+    const toast = await this.toastCtrl.create({
+      message: "กรุณาเลือกบ้านก่อน",
+      duration: 3000,
+      cssClass: "Toast"
+    });
+    toast.present();
+
+  }
+
+
 
 
 }

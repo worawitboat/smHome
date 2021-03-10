@@ -11,8 +11,8 @@ export class crudapi {
   myhome = {
     id:"",
     name:"",
-    lat:15.154463,
-    lng:104.4434141,
+    lat:"",
+    lng:"",
   };
   home: any;
   // data: any = [
@@ -59,15 +59,7 @@ export class crudapi {
   
 
   constructor(db: AngularFireDatabase,private fs: AngularFirestore) {
-    // this.fhomes$ = new BehaviorSubject(null);
-    // this.data = db.list('/items', (ref) =>
-    //   ref.orderByChild('home').equalTo('บ้านพัก')
-    // );
-    // this.data = db.list('/homes', (ref) =>
-    //   ref.orderByChild('บ้านพัก').equalTo('large')
-    // );
-    this.data = db.list('homes').valueChanges();
-    // this.temp = firestore.collection('data').valueChanges();
+  
   }
 
   readMyHome(){
@@ -77,10 +69,6 @@ export class crudapi {
     return this.fs.collection('home').doc(myHomeId).valueChanges();
   }
 
-  readData() {
-    return this.data;
-    // return this.fs.collection('AEC').snapshotChanges();
-  }
   addHome(home) {
     this.temp = this.fs.collection('home');
     this.temp.add({
@@ -90,6 +78,10 @@ export class crudapi {
         // Other info you want to add here
     });
     this.home.push(home);
+  }
+  addDevice(homeId,item) {
+    this.fs.collection('home').doc(homeId).set({device:item},{ merge: true});
+   
   }
   addData() {
     // this.temp = this.fs.collection('AEC');
@@ -101,10 +93,14 @@ export class crudapi {
     // });
   }
 
-  delData(docId: any) {
-    // return this.fs.doc('AEC/' + docId).delete();
+  delDevice(homeId,item) {
+    this.fs.collection('home').doc(homeId).set({ device: item },{ merge: true });
   }
   updateData(homeId,item) {
+    this.fs.collection('home').doc(homeId).set({ device: item },{ merge: true });
+  }
+
+  updateDevice(homeId,item){
     this.fs.collection('home').doc(homeId).set({ device: item },{ merge: true });
   }
 }
