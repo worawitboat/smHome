@@ -9,9 +9,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class crudapi {
   temp: any;
   myhome = {
+    id:"",
     name:"",
     lat:15.154463,
-    lng:104.4434141
+    lng:104.4434141,
   };
   home: any;
   // data: any = [
@@ -72,8 +73,8 @@ export class crudapi {
   readMyHome(){
     return this.fs.collection('home').snapshotChanges();
   }
-  readHomeSelect(myHome){
-    return this.fs.doc('home/'+myHome);
+  readHomeSelect(myHomeId){
+    return this.fs.collection('home').doc(myHomeId).valueChanges();
   }
 
   readData() {
@@ -103,17 +104,7 @@ export class crudapi {
   delData(docId: any) {
     // return this.fs.doc('AEC/' + docId).delete();
   }
-  updateData(docId: any) {
-    if (this.data[docId].status == false) {
-      this.data[docId].status = true;
-    } else {
-      this.data[docId].status = false;
-    }
-    // return this.fs.doc('AEC/' + docId).update({
-    //     img: 'https://img.kapook.com/u/2015/thachapol/zzz999999999/d11.jpg',
-    //     cname: 'UUUU',
-
-    //     // Other info you want to add here
-    // })
+  updateData(homeId,item) {
+    this.fs.collection('home').doc(homeId).set({ device: item },{ merge: true });
   }
 }

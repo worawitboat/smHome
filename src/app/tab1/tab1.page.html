@@ -12,7 +12,7 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense" class="ion-no-border">
     <ion-toolbar>
-      <ion-title size="large">บ้านของฉัน</ion-title>
+      <ion-title size="large">{{myHome}}</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -34,17 +34,17 @@
 
   <ion-grid>
     <p style="margin-left:20px;">อุปกรณ์เสริม</p>
-    <ion-card *ngIf="datas.length == 0" style="width: 120px; max-width: 120px; max-height: 120px;">
+    <ion-card *ngIf="device.length == 0" style="width: 120px; max-width: 120px; max-height: 120px;">
       <ion-card-header>
         <ion-icon style="font-size: 35px;" name="add"></ion-icon>
         <p style="font-size: 12px;">เพิ่มอุปกรณ์เสริม</p>
       </ion-card-header>
     </ion-card>
 
-    <ion-row style="text-align: center;" size-lg="2" size-md="2" size-sm="2" size="2">
-      <ion-col *ngFor="let item of home.device | async">
+    <ion-row *ngIf="myHome != 'บ้านของฉัน'" style="text-align: center;" size-lg="2" size-md="2" size-sm="2" size="2">
+      <ion-col *ngFor="let item of device; let i= index">
         <ion-card style="width: 120px; max-width: 120px; max-height: 120px;"
-          (click)="OpenOrClose(item.status)">
+          (click)="OpenOrClose(item,i)">
           <ion-card-header>
             <ion-icon *ngIf="item.type == 'light' && item.status == false" style="font-size: 35px;" name="bulb-outline">
             </ion-icon>
