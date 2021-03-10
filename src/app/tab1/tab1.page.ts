@@ -14,35 +14,43 @@ import { crudapi } from '../CRUD/crudapi';
 export class Tab1Page {
   Obj: any = [];
   home: any; // บ้านที่มีทั้งหมด
-  myHome: String = "บ้านพัก";
-  datas: any;
+  myHome: String = "บ้าน1";
+  homeSelect: any;
   constructor(private getCrud: crudapi, private route: Router) { }
 
   ngOnInit(): void {
     // ตัวอย่างจาก firebase 
     // -------------------------------
-    // this.getCrud.readData().subscribe(data => {
-    //   this.Obj = data.map(e => {
+    this.getCrud.readMyHome().subscribe(data => {
+      this.home = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          name: e.payload.doc.data()['name'.toString()],
+          lat: e.payload.doc.data()['lat'.toString()],
+          lng: e.payload.doc.data()['lng'.toString()],
+          device: e.payload.doc.data()['device']
+        }
+      });
+
+      console.log("home => ", this.home);
+      // --------------------------------
+
+
+      // ------------------------------
+
+
+    });
+    // this.getCrud.readHomeSelect(this.myHome).subscribe(data => {
+    //   this.homeSelect = data.map(e => {
     //     return {
-    //       // id: e.payload.doc.id,
-    //       // name: e.payload.doc.data()['name'.toString()],
-    //       // type: e.payload.doc.data()['type'.toString()],
-    //       // status: e.payload.doc.data()['status'.toString()],
-
-
+    //       id: e.payload.doc.id,
+    //       name: e.payload.doc.data()['name'.toString()],
+    //       lat: e.payload.doc.data()['lat'.toString()],
+    //       lng: e.payload.doc.data()['lng'.toString()],
+    //       device: e.payload.doc.data()['device']
     //     }
     //   });
-    //   console.log(this.Obj);
     // });
-    // --------------------------------
-
-
-    // ------------------------------
-    this.home = this.getCrud.readHome();
-
-    this.datas = this.getCrud.readData();
-    
-
   }
 
   OpenOrClose(item) {
@@ -67,12 +75,23 @@ export class Tab1Page {
       }, {
         text: 'เลือก',
         handler: (data) => {
+          const temp = JSON.stringify(data);
+          this.getCrud.myhome.name = temp['name'];
+          this.getCrud.myhome.lat = temp['lat'];
+          this.getCrud.myhome.lng = temp['lng'];
 
+
+          // this.myHome = data.value
         }
       }
     ];
     for (let i of this.home) {
-      alert.inputs.push({ type: 'radio', label: i.name, value: i.name })
+      alert.inputs.push({
+        type: 'radio', label: i.name, value: {
+          name: i.name,
+          lat: i.lat, lng: i.lng
+        }
+      })
     }
 
     document.body.appendChild(alert);
@@ -89,6 +108,16 @@ export class Tab1Page {
         id: 'newHome',
         placeholder: 'ชื่อบ้าน'
       },
+      {
+        name: 'lat',
+        id: 'lat',
+        placeholder: 'Latitude'
+      },
+      {
+        name: 'lng',
+        id: 'lng',
+        placeholder: 'Lngitude'
+      },
 
     ];
     alert.buttons = [
@@ -103,7 +132,9 @@ export class Tab1Page {
         text: 'Ok',
         handler: (data) => {
           const newHome = {
-            name: data.newHome
+            name: data.newHome,
+            lat: data.lat,
+            lng: data.lng
           }
           this.getCrud.addHome(newHome);
         }
@@ -114,10 +145,10 @@ export class Tab1Page {
     return alert.present();
   }
 
-  edit(item){
+  edit(item) {
     console.log(item);
-    
+
   }
-  
-  
+
+
 }

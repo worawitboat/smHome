@@ -4498,6 +4498,11 @@ emojis-list@^3.0.0:
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-3.0.0.tgz#5570662046ad29e2e916e71aae260abdff4f6a78"
   integrity sha512-/kyM18EfinwXZbno9FyUGeFh87KC8HRQBQGildHZbEuRyWFOmv1U10o9BBp8XVZDVNNuQKyIGIu5ZYAAXJ0V2Q==
 
+emulate@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/emulate/-/emulate-1.0.2.tgz#242570f21d5c249fc2102b5605c44c28a3d9a885"
+  integrity sha1-JCVw8h1cJJ/CECtWBcRMKKPZqIU=
+
 encodeurl@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.2.tgz#ad3ff4c86ec2d029322f5a02c3a9a606c95b3f59"
@@ -5460,11 +5465,6 @@ gtoken@^5.0.4:
     google-p12-pem "^3.0.3"
     jws "^4.0.0"
 
-hammerjs@^2.0.8:
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/hammerjs/-/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
-  integrity sha1-BO93hiz/K7edMPdpIJWTAiK/YPE=
-
 handle-thing@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/handle-thing/-/handle-thing-2.0.1.tgz#857f79ce359580c340d43081cc648970d0bb234e"
@@ -6018,13 +6018,6 @@ internal-ip@^4.3.0:
   dependencies:
     default-gateway "^4.2.0"
     ipaddr.js "^1.9.0"
-
-ionic-long-press@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/ionic-long-press/-/ionic-long-press-2.0.3.tgz#9a7e4fc7119025d83d49d6f540e6417f6d71be29"
-  integrity sha512-mFU61xIIAq1JEmXvKwYbqaHgBZ+yRm8NBpD7FugJfZpE66Tkwk8UYRTyUvW+0e8jCUBmuaqcGi81J1dGv9+a5g==
-  dependencies:
-    tslib "^1.9.0"
 
 ionicons@^5.5.0:
   version "5.5.0"

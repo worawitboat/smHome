@@ -28,6 +28,7 @@
     "cordova": "^10.0.0",
     "cordova-browser": "6.0.0",
     "cordova-plugin-googlemaps": "^2.7.1",
+    "emulate": "1.0.2",
     "firebase": "^8.2.10",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

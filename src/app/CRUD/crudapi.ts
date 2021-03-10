@@ -1,5 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { AngularFireDatabase, AngularFireAction } from '@angular/fire/database';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -7,7 +8,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class crudapi {
   temp: any;
-  home: any = [{ name: 'บ้าน1' }, { name: 'บ้าน2' }, { name: 'บ้านพัก' }];
+  myhome = {
+    name:"",
+    lat:15.154463,
+    lng:104.4434141
+  };
+  home: any;
   // data: any = [
   //     {
   //         id: 0,
@@ -51,7 +57,7 @@ export class crudapi {
   data: any;
   
 
-  constructor(db: AngularFireDatabase) {
+  constructor(db: AngularFireDatabase,private fs: AngularFirestore) {
     // this.fhomes$ = new BehaviorSubject(null);
     // this.data = db.list('/items', (ref) =>
     //   ref.orderByChild('home').equalTo('บ้านพัก')
@@ -63,14 +69,25 @@ export class crudapi {
     // this.temp = firestore.collection('data').valueChanges();
   }
 
+  readMyHome(){
+    return this.fs.collection('home').snapshotChanges();
+  }
+  readHomeSelect(myHome){
+    return this.fs.doc('home/'+myHome);
+  }
+
   readData() {
     return this.data;
     // return this.fs.collection('AEC').snapshotChanges();
   }
-  readHome() {
-    return this.home;
-  }
   addHome(home) {
+    this.temp = this.fs.collection('home');
+    this.temp.add({
+        name:home.name,
+        lat:home.lat,
+        lng:home.lng
+        // Other info you want to add here
+    });
     this.home.push(home);
   }
   addData() {

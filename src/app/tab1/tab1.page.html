@@ -42,7 +42,7 @@
     </ion-card>
 
     <ion-row style="text-align: center;" size-lg="2" size-md="2" size-sm="2" size="2">
-      <ion-col *ngFor="let item of datas | async">
+      <ion-col *ngFor="let item of home.device | async">
         <ion-card style="width: 120px; max-width: 120px; max-height: 120px;"
           (click)="OpenOrClose(item.status)">
           <ion-card-header>
