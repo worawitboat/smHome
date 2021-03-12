@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { AngularFireDatabase, AngularFireAction } from '@angular/fire/database';
+import { AngularFireDatabase, AngularFireAction, AngularFireList } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -14,6 +14,7 @@ export class crudapi {
     lat:"",
     lng:"",
   };
+  tasksRef: AngularFireList<any>
   home: any;
   // data: any = [
   //     {
@@ -58,7 +59,7 @@ export class crudapi {
   data: any;
   
 
-  constructor(db: AngularFireDatabase,private fs: AngularFirestore) {
+  constructor(private db: AngularFireDatabase,private fs: AngularFirestore) {
   
   }
 
@@ -96,11 +97,17 @@ export class crudapi {
   delDevice(homeId,item) {
     this.fs.collection('home').doc(homeId).set({ device: item },{ merge: true });
   }
-  updateData(homeId,item) {
+  updateData(homeId,item,i) {
+    
+    this.db.list(`/home/${homeId}/device`).update(String(i),{status:item[i].status})
+
     this.fs.collection('home').doc(homeId).set({ device: item },{ merge: true });
+    
   }
 
   updateDevice(homeId,item){
+    
     this.fs.collection('home').doc(homeId).set({ device: item },{ merge: true });
+
   }
 }

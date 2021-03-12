@@ -34,7 +34,6 @@ export class Tab1Page {
           device: e.payload.doc.data()['device'],
         };
       });
-
       // console.log('home => ', this.home);
     });
   }
@@ -42,7 +41,7 @@ export class Tab1Page {
   OpenOrClose(item, i) {
     this.device[i].status = !item.status;
 
-    this.getCrud.updateData(this.getCrud.myhome.id, this.device);
+    this.getCrud.updateData(this.getCrud.myhome.id, this.device,i);
   }
   discover() {
     this.route.navigate(['/tabs/tab2']);
